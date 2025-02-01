@@ -1,0 +1,12 @@
+.navigation-tab {
+    @apply flex gap-x-3;
+
+    li {
+        @apply p-3 rounded-t-sm ;
+    }
+
+    .active{
+        @apply bg-gray-800;
+    }
+
+}

@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Lab404\Impersonate\Models\Impersonate;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -13,12 +14,10 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens;
-
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use Impersonate;
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
-    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -26,12 +25,16 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'middle_name',
+        'birth_date',
+        'gender',
         'email',
-        'password',
+        'phone',
+        'address',
         'role_id',
-        'created_at',
-        'updated_at'
+        'password'
     ];
 
     /**
@@ -53,6 +56,8 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'account_type',
+        'name'
     ];
 
     /**
@@ -66,5 +71,21 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getAccountTypeAttribute(): string
+    {
+        $roleTypes = [1 => 'Guest', 2 => 'Patient', 3 => 'Nurse', 4 => 'Doctor',5 => 'Administrator'];
+        return $roleTypes[$this->role_id] ?? 'Unknown';
+    }
+
+    public function getNameAttribute():string
+    {
+        return $this->first_name.' '.$this->middle_name.' '.$this->last_name;
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class,'doctor_id');
     }
 }

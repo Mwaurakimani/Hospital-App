@@ -12,7 +12,7 @@ class RolesSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles = ['Guest','Patient','Doctor','Administrator'];
+        $roles = ['Guest','Patient','Nurse','Doctor','Administrator'];
 
         foreach ($roles as $role) {
             $role_model = new Roles();

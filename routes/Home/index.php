@@ -1,13 +1,12 @@
 <?php
-use Illuminate\Foundation\Application;
+
+use App\Http\Controllers\DoctorController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::prefix('Home')->as('Home.')->group(function () {
+Route::prefix('Home')->as('Home.index.')->group(function () {
 
-    Route::get('/doctors', function () {
-        return Inertia::render('Welcome');
-    })->name('Doctors');
+    Route::get('/doctors', [DoctorController::class,'HomeDoctors'])->name('Doctors');
 
     Route::get('/procedures', function () {
         return Inertia::render('Welcome');

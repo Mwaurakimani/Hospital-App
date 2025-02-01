@@ -8,10 +8,16 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import HomeNavigation from "@/AppComponents/HomeNavigation.vue";
+import SelectInput from "@/Components/SelectInput.vue";
 
 const form = useForm({
-    name: '',
+    first_name:'',
+    last_name:'',
+    middle_name:'',
+    date_of_birth:'',
+    gender:'',
     email: '',
+    phone: '',
     password: '',
     password_confirmation: '',
     terms: false,
@@ -29,55 +35,97 @@ const submit = () => {
     <HomeNavigation></HomeNavigation>
     <AuthenticationCard>
         <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="name" value="Name" />
+
+            <div class="mt-4">
+                <InputLabel for="first_name" value="First Name" />
                 <TextInput
-                    id="name"
-                    v-model="form.name"
+                    v-model="form.first_name"
                     type="text"
                     class="mt-1 block w-full"
                     required
-                    autofocus
-                    autocomplete="name"
                 />
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2" :message="form.errors.first_name" />
             </div>
-
+            <div class="mt-4">
+                <InputLabel for="last_name" value="Last Name" />
+                <TextInput
+                    v-model="form.last_name"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                />
+                <InputError class="mt-2" :message="form.errors.last_name" />
+            </div>
+            <div class="mt-4">
+                <InputLabel for="last_name" value="Middle Name" />
+                <TextInput
+                    v-model="form.middle_name"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                />
+                <InputError class="mt-2" :message="form.errors.middle_name" />
+            </div>
             <div class="mt-4">
                 <InputLabel for="email" value="Email" />
                 <TextInput
-                    id="email"
                     v-model="form.email"
                     type="email"
                     class="mt-1 block w-full"
                     required
-                    autocomplete="username"
                 />
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
-
+            <div class="mt-4">
+                <InputLabel for="phone" value="Phone" />
+                <TextInput
+                    v-model="form.phone"
+                    type="tel"
+                    class="mt-1 block w-full"
+                    required
+                />
+                <InputError class="mt-2" :message="form.errors.phone" />
+            </div>
+            <div class="mt-4">
+                <InputLabel for="last_name" value="Date of birth" />
+                <TextInput
+                    v-model="form.date_of_birth"
+                    type="date"
+                    class="mt-1 block w-full"
+                    required
+                />
+                <InputError class="mt-2" :message="form.errors.date_of_birth" />
+            </div>
+            <div class="mt-4">
+                <InputLabel for="gender" value="Gender" />
+                <SelectInput
+                    v-model="form.gender"
+                    class="mt-1 block w-full rounded"
+                    required
+                >
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </SelectInput>
+                <InputError class="mt-2" :message="form.errors.gender" />
+            </div>
             <div class="mt-4">
                 <InputLabel for="password" value="Password" />
                 <TextInput
-                    id="password"
                     v-model="form.password"
                     type="password"
                     class="mt-1 block w-full"
                     required
-                    autocomplete="new-password"
                 />
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
-
             <div class="mt-4">
                 <InputLabel for="password_confirmation" value="Confirm Password" />
                 <TextInput
-                    id="password_confirmation"
                     v-model="form.password_confirmation"
                     type="password"
                     class="mt-1 block w-full"
                     required
-                    autocomplete="new-password"
                 />
                 <InputError class="mt-2" :message="form.errors.password_confirmation" />
             </div>

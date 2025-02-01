@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    dd("working");
     return Inertia::render('Welcome');
 })->name('Home');
 

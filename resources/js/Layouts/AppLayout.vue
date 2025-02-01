@@ -1,6 +1,6 @@
 <script setup>
 import {ref} from 'vue';
-import {Head, Link, router} from '@inertiajs/vue3';
+import {Head, Link, router, usePage} from '@inertiajs/vue3';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
 import Banner from '@/Components/Banner.vue';
 import Dropdown from '@/Components/Dropdown.vue';
@@ -8,35 +8,45 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import {route} from "ziggy-js";
+import {getAccountType} from "@/functions.js";
 
-defineProps({
-    title: String,
-});
-
+defineProps(['title']);
 const showingNavigationDropdown = ref(false);
 const logout = () => {
-    router.post(route('logout'));
-};
+    router.post(route('logout'))
+}
+
+
+const account_type = getAccountType()
 
 const adminRoutes = [
     {
-        name:'Roles',
-        link:'dashboard.roles.list',
-        supported:[
+        name: 'Roles',
+        link: 'dashboard.roles.list',
+        supported: [
             'dashboard.roles.list',
-            'dashboard'
+        ]
+    },
+    {
+        name: 'Users',
+        link: 'dashboard.users.list',
+        supported: [
+            'dashboard.doctors.list',
         ]
     }
 ]
 
-function is_active(module){
-    for(let key in module['supported']){
-        if(route().current(module['supported'][key])){
+function is_active(module) {
+
+    for (let key in module['supported']) {
+        if (route().current(module['supported'][key])) {
             return true;
         }
     }
     return false;
 }
+
+console.log()
 
 
 </script>
@@ -53,11 +63,16 @@ function is_active(module){
                 <ul class="py-0 px-[10px] mx-0 ml-2">
                     <h5 class="text-white mb-[10px]">Application</h5>
                     <Link :href="route('dashboard')" as="li" class="NavigationLink" :class="{'active':route().current('dashboard')}">Dashboard</Link>
-                    <Link :href="route('dashboard')" as="li" class="NavigationLink" :class="{'active':route().current('patients')}">Patients</Link>
-                    <Link :href="route('dashboard')" as="li" class="NavigationLink" :class="{'active':route().current('doctors')}">Doctors</Link>
                     <hr class="border-gray-400 mb-[20px]"/>
-                    <h5 class="text-white mb-[10px]">Admin</h5>
-                    <Link v-for="module in adminRoutes" :href="route(module.link)" as="li" :class="['NavigationLink',{'active':is_active(module),}]">{{module.name}}</Link>
+                    <template v-if="account_type == 'Nurse'">
+                        <h5 class="text-white mb-[10px]">Nurse</h5>
+                        <Link :href="route('dashboard.patients.list')" as="li" class="NavigationLink" :class="{'active':route().current('patients')}">Patients</Link>
+                    </template>
+                    <template v-if="account_type == 'Administrator'">
+                        <h5 class="text-white mb-[10px]">Admin</h5>
+                        <Link :href="route('dashboard.doctors.list')" as="li" class="NavigationLink" :class="{'active':route().current('doctors')}">Doctors</Link>
+                        <Link v-for="module in adminRoutes" :href="route(module.link)" as="li" :class="['NavigationLink',{'active':is_active(module),}]">{{ module.name }}</Link>
+                    </template>
                 </ul>
             </section>
             <section class="h-screen w-[calc(100%-200px)] overflow-auto">
@@ -76,7 +91,7 @@ function is_active(module){
                                 <span v-else class="inline-flex rounded-md">
                                             <button type="button"
                                                     class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                                {{ $page.props.auth.user.name }}
+                                                {{ $page.props.auth.user.first_name }}
 
                                                 <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>

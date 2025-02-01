@@ -1,12 +1,7 @@
 <?php
 
 namespace Database\Seeders;
-
-use App\Models\User;
-
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Laravel\Jetstream\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,6 +11,12 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(RolesSeeder::class);
-        $this->call(UserSeeder::class);
+
+        for ($i = 0; $i < 5; $i++) {
+            $this->call(UserSeeder::class);
+        }
+
+        $this->call(ElevateDoctor::class);
+        $this->call(AppointmentSeeder::class);
     }
 }

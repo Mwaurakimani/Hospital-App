@@ -6,12 +6,12 @@ const HomeRoutes = [
     },
     {
         name: "Doctors",
-        link: route('Home.Doctors'),
-        supported: ['Home.Doctors'],
+        link: route('Home.index.Doctors'),
+        supported: ['Home.index.Doctors'],
     },
     {
         name: "Procedures",
-        link: route('Home.Procedures'),
+        link: route('Home.index.Procedures'),
         supported: ['Home.Procedures'],
     },
 ]

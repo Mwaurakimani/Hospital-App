@@ -23,8 +23,11 @@ const is_active = (item) => {
             </ul>
         </div>
         <div class="px-[20px]">
-            <ul>
+            <ul v-if="page.props.auth.user == null">
                 <Link v-for="item in authPages" as="li" :href="item.link" :class="{'active':is_active(item)}">{{item.name}}</Link>
+            </ul>
+            <ul v-else>
+                <Link as="li" :href="'/dashboard'">Dashboard</Link>
             </ul>
         </div>
     </nav>
