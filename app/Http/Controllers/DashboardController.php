@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -15,15 +14,15 @@ class DashboardController extends Controller
 
     public function __invoke(Request $request)
     {
+
         switch ($this->getAccountType()) {
             case 'Nurse':
-                $data['appointments'] = (Appointment::with(['doctor','patient'])->get());
+                $this->data['appointments'] = (Appointment::with(['doctor','patient'])->get());
                 break;
         }
 
-
         return Inertia::render('Dashboard',[
-            'dashboardData' => $data,
+            'dashboardData' => $this->data,
         ]);
     }
 
@@ -34,6 +33,6 @@ class DashboardController extends Controller
 
     function show($data)
     {
-        Debugbar::addMessage($data);
+        Debugbar::addMessage($this->data);
     }
 }

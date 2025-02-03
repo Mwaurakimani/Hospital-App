@@ -29,6 +29,7 @@ class DatabaseServiceProvider extends ServiceProvider
             database_path('migrations/Users'),
             database_path('migrations/Roles'),
             database_path('migrations/Appointments'),
+            database_path('migrations/Batch'),
         ]);
     }
 }

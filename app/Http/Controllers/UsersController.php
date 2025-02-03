@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\BaseControllers\BaseApiController;
-use App\Models\Roles;
+use App\Models\User;
+use Illuminate\Http\Request;
 
-class RolesController extends Controller
+class UsersController extends Controller
 {
     use BaseApiController;
     public function __construct(){
-        $this->model = Roles::class;
+        $this->model = User::class;
     }
 }

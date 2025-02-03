@@ -5,23 +5,29 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\LabController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\RolesController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 
 Route::middleware(EnsureFrontendRequestsAreStateful::class)
-    ->group(function () {
+    ->group(callback: function () {
+
         Route::post('/login', [AuthController::class, 'login']);
-        Route::get('/logout', [AuthController::class, 'logout'])
-            ->middleware(['middleware' => 'auth:sanctum']);
+
+        Route::get('/logout', [AuthController::class, 'logout'])->middleware(['middleware' => 'auth:sanctum']);
 
         Route::group(['middleware' => 'auth:sanctum'], function () {
             Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
-        });
 
+            Route::resource('roles', RolesController::class);
+            Route::resource('users', UsersController::class);
+
+        });
     });
+
 
 Route::prefix('/doctor')->group(function () {
     Route::get('/all', [DoctorController::class, 'getAllDoctors']);

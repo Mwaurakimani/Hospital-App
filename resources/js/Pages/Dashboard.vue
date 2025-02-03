@@ -17,6 +17,6 @@ const accountType = getAccountType()
             <h2 class="font-semibold text-xl leading-tight">Dashboard</h2>
         </template>
         <NurseDashboard v-if="accountType == 'Nurse'" :dashboardData/>
-        <AdminDashboard v-else-if="accountType == 'Administrator'" :stats/>
+        <AdminDashboard v-else-if="accountType == 'Administrator'" :stats='dashboardData'/>
     </AppLayout>
 </template>

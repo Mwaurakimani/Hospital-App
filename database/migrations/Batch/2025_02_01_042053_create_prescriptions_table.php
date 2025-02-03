@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('doctors', function (Blueprint $table) {
+        Schema::create('prescriptions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('appointment_id')->index()->constrained('appointments');
-            $table->string('temperature');
-            $table->string('heart_rate');
-            $table->string('blood_pressure');
+            $table->string('prescriptions');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('prescriptions');
     }
 };

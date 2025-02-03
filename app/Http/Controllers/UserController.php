@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\BaseControllers\BaseApiController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    use BaseApiController;
     public function sign_in_as(Request $request, User $user)
     {
         Auth::guard('web')->user()->impersonate($user);

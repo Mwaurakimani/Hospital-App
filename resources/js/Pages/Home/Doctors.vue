@@ -303,7 +303,7 @@ const uniquePractices = [
                                 <p class="card-text text-primary font-weight-bold">{{ doctor.practice }}</p>
 
                                 <!-- Book Appointment Button -->
-                                <button class="btn btn-primary mt-auto">
+                                <button class="btn btn-danger mt-auto">
                                     Book Appointment
                                 </button>
                             </div>
